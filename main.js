@@ -1,62 +1,89 @@
 const choice = ["rock", "paper", "scissors"];
 
+//scores tracking
+let humanScore = 0;
+let computerScore = 0;
+
+//dom manipulation
+const playBtns = document.querySelector('#play-btns');
+const resultsDiv = document.querySelector('#results');
+const resultsText = document.createElement("p");
+const score = document.createElement("p");
+resultsDiv.appendChild(resultsText);
+resultsDiv.appendChild(score);
+
+
+//functions
 function getComputerChoice(){
     let i = Math.floor(Math.random() * 3);
     return choice[i];
 }
-
-//testing if it returns the expected 
-// console.log(getComputerChoice());
-
-function getHumanChoice(){
-    let humanChoice = prompt("Enter 'rock', 'paper' or 'scissors'");
-
-    return humanChoice.toLowerCase();
-}
-
-// testing if it returns the expected
-// console.log(getHumanChoice());
-
-function playGame(){
-    let humanScore = 0;
-    let computerScore = 0;
-
-    function playRound(humanChoice, computerChoice) {
+function playRound(humanChoice, computerChoice) {
         if(humanChoice === 'paper' && computerChoice ==='rock'){
-            console.log("You won! Paper beats rock");
+            resultsText.innerText = "You won this round! Paper beats rock";
             humanScore++;
         }else if(humanChoice === 'paper' && computerChoice ==='scissors'){
-            console.log("You lost! Scissors beats paper");
+            resultsText.innerText = "You lost this round! Scissors beats paper"
             computerScore++;
         }else if(humanChoice === 'rock' && computerChoice ==='scissors'){
-            console.log("You won! Rock beats scissors");
+            resultsText.innerText = "You won this round! Rock beats scissors";
             humanScore++;
         }else if(humanChoice === 'rock' && computerChoice ==='paper'){
-            console.log("You lost! Paper beats rock");
+            resultsText.innerText = "You lost this round! Paper beats rock";
             computerScore++;
         }else if(humanChoice === 'scissors' && computerChoice ==='paper'){
-            console.log("You won! Scissors beat paper");
+            resultsText.innerText = "You won this round! Scissors beat paper";
             humanScore++;
         }else if(humanChoice === 'scissors' && computerChoice ==='rock'){
-            console.log("You lost! Rock beats scissors");
+            resultsText.innerText = "You lost round! Rock beats scissors";
             computerScore++;
         }else if(humanChoice ===  computerChoice){
-            console.log("Its a tie! Play again");
+            resultsText.innerText = "Its a tie! Play again";
         }else{
-            console.log("Ooops try again");
+            resultsText.innerText = "Ooops try again";
         }
-        console.log(`Human score: ${humanScore} Computers score: ${computerScore}`);
-        
-      }
-      for(let i=0; i<5; i++){
-        let humanSelection = getHumanChoice();
-        let computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection);
-      }
-}
+        score.innerText =`Your score: ${humanScore} Computers score: ${computerScore}`;
 
-playGame();
-  
+        if(humanScore=== 5 | computerScore === 5){
+            if(humanScore>computerScore){
+                resultsText.innerText =" You won the game, congrats!"
+            }else{
+                resultsText.innerText = "Computer won the game!";
+                
+            }
+            score.innerText = `${humanScore} \/ ${computerScore}`
+            humanScore = 0;
+            computerScore = 0;
+
+        }
+
+ }
+
+ //events
+playBtns.addEventListener('click', (event) => {
+    let target = event.target;
+    let humanSelection;
+    let computerSelection;
+
+    switch(target.id) {
+        case 'rock':
+            humanSelection = target.id;
+            computerSelection = getComputerChoice();
+            playRound(humanSelection,computerSelection);
+            break;
+        case 'paper':
+            humanSelection = target.id;
+            computerSelection = getComputerChoice();
+            playRound(humanSelection,computerSelection);
+            break;
+        case 'scissors':
+            humanSelection = target.id;
+            computerSelection = getComputerChoice();
+            playRound(humanSelection,computerSelection);
+            break;
+    }
+});
+
 
 
 
