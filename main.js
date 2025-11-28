@@ -44,18 +44,15 @@ function playRound(humanChoice, computerChoice) {
         }
         score.innerText =`Your score: ${humanScore} Computers score: ${computerScore}`;
 
-        if(humanScore=== 5 | computerScore === 5){
-            if(humanScore>computerScore){
-                resultsText.innerText =" You won the game, congrats!"
-            }else{
-                resultsText.innerText = "Computer won the game!";
-                
-            }
-            score.innerText = `${humanScore} \/ ${computerScore}`
-            humanScore = 0;
-            computerScore = 0;
-
+       if(humanScore === 5 || computerScore === 5){
+        if(humanScore > computerScore){
+            resultsText.innerText = "You won the game, congrats! Click Restart to play again.";
+        } else {
+            resultsText.innerText = "Computer won the game! Click Restart to play again.";
         }
+        score.innerText = `${humanScore} / ${computerScore}`;
+        playBtns.querySelectorAll('button').forEach(btn => btn.disabled = true);
+    }
 
  }
 
@@ -83,6 +80,16 @@ playBtns.addEventListener('click', (event) => {
             break;
     }
 });
+
+//restart 
+document.getElementById('restart').addEventListener('click', () => {
+    humanScore = 0;
+    computerScore = 0;
+    resultsText.innerText = '';
+    score.innerText = `Your score: 0 Computers score: 0`;
+    playBtns.querySelectorAll('button').forEach(btn => btn.disabled = false);
+});
+
 
 
 
